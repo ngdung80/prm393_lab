@@ -6,7 +6,6 @@ class Product {
   String image;
   double price;
 
-  // Danh sach san pham mac dinh
   static List<Product> products = [
     Product(id: 1, name: 'Laptop Dell XPS 15', image: 'dell.png', price: 32000000),
     Product(id: 2, name: 'iPhone 15 Pro', image: 'iphone.png', price: 28000000),
@@ -15,7 +14,6 @@ class Product {
     Product(id: 5, name: 'Apple Watch Series 9', image: 'apple_watch.png', price: 11000000),
   ];
 
-  // Constructor
   Product({
     required this.id,
     required this.name,
@@ -23,7 +21,6 @@ class Product {
     required this.price,
   });
 
-  // Factory: tao Product tu mot Map JSON
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
@@ -33,7 +30,6 @@ class Product {
     );
   }
 
-  // Chuyen Product thanh Map JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -48,12 +44,10 @@ class Product {
     return 'Product(id: $id, name: $name, price: $price)';
   }
 
-  // Them san pham vao danh sach
   static void add(Product product) {
     products.add(product);
   }
 
-  // Sua san pham theo id
   static void edit(int id, String newName, String newImage, double newPrice) {
     for (var p in products) {
       if (p.id == id) {
@@ -66,19 +60,16 @@ class Product {
     print('Khong tim thay san pham co id = $id');
   }
 
-  // Tim kiem theo ten (khong phan biet hoa thuong)
   static List<Product> searchByName(String keyword) {
     return products
         .where((p) => p.name.toLowerCase().contains(keyword.toLowerCase()))
         .toList();
   }
 
-  // Tim kiem theo khoang gia
   static List<Product> searchByPriceRange(double min, double max) {
     return products.where((p) => p.price >= min && p.price <= max).toList();
   }
 
-  // Tim san pham theo id
   static Product? findById(int id) {
     for (var p in products) {
       if (p.id == id) return p;
@@ -86,7 +77,6 @@ class Product {
     return null;
   }
 
-  // Tang gia tat ca san pham len 10% - dung declarative (map)
   static List<Product> increasePrice() {
     return products.map((p) => Product(
       id: p.id,
@@ -96,25 +86,21 @@ class Product {
     )).toList();
   }
 
-  // Xoa san pham theo id
   static void delete(int id) {
     products.removeWhere((p) => p.id == id);
     print('Da xoa san pham co id = $id');
   }
 
-  // Tao danh sach Product tu JSON string
   static List<Product> fromJsonList(String jsonString) {
     List<dynamic> list = jsonDecode(jsonString);
     return list.map((item) => Product.fromJson(item)).toList();
   }
 
-  // Sắp xếp theo giá
   static void sortByPrice(bool ascending) {
     products.sort((a, b) =>
         ascending ? a.price.compareTo(b.price) : b.price.compareTo(a.price));
   }
 
-  // In toan bo danh sach
   static void printAll() {
     for (var p in products) {
       print(p);
@@ -139,7 +125,6 @@ void main() {
   print("\n=== Find Product id 1 ===");
   print(Product.findById(1));
 
-  // Edit sử dụng id=1 thay cho P001, truyền từng tham số
   Product.edit(1, "iPhone 15 Pro", "iphone20.png", 3000);
 
   print("\n=== After Edit ===");
